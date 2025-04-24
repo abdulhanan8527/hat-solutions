@@ -64,3 +64,12 @@ def portfolio_list(request):
 def portfolio_detail(request, slug):
     item = get_object_or_404(PortfolioItem, slug=slug)
     return render(request, 'portfolio/portfolio-details.html', {'portfolio_item': item})
+
+def service_detail(request, slug):
+    # You'll need to create a Service model or use some way to identify services
+    # For now, we'll just pass the slug to the template
+    context = {
+        'slug': slug,
+        'service_name': slug.replace('-', ' ').title(),
+    }
+    return render(request, 'services-details.html', context)

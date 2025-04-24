@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
+    path('services/<slug:slug>/', views.service_detail, name='service_detail'),  # Add this line
     # Add more URLs for other pages
     # path('portfolio/', views.portfolio, name='portfolio'),
     path('team/', views.team, name='team'),
