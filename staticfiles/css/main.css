@@ -287,19 +287,40 @@ h6 {
   color: var(--contrast-color);
 }
 
+/* Ensure the logo container has proper height */
 .header .branding {
   min-height: 60px;
   padding: 10px 0;
+  display: flex;
+  align-items: center; /* Vertical centering */
+}
+
+/* If you need the logo to shrink on mobile */
+@media (max-width: 768px) {
+  .header .logo-img {
+    height: 50px;
+  }
+}
+
+.header .logo img.logo-img {
+  all:unset
+}
+
+.header .logo-img {
+  height: 60px !important; /* Match your navbar height */
+  width: auto !important; /* Maintain aspect ratio */
+  display: block; /* Remove inline spacing */
+  margin-right: 10px; /* Adjust spacing as needed */
 }
 
 .header .logo {
   line-height: 1;
 }
 
-.header .logo img {
+/* .header .logo img {
   max-height: 36px;
   margin-right: 8px;
-}
+} */
 
 .header .logo h1 {
   font-size: 30px;
@@ -1769,7 +1790,6 @@ section,
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
 }
 
 .faq .faq-container .faq-item:last-child {
@@ -1797,16 +1817,16 @@ section,
 }
 
 .faq .faq-container .faq-item .faq-content {
-  display: grid;
-  grid-template-rows: 0fr;
+  display: none;
+  padding-top: 10px;
   transition: 0.3s ease-in-out;
-  visibility: hidden;
-  opacity: 0;
 }
 
 .faq .faq-container .faq-item .faq-content p {
   margin-bottom: 0;
-  overflow: hidden;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .faq .faq-container .faq-item .faq-toggle {
@@ -1828,15 +1848,32 @@ section,
 }
 
 .faq .faq-container .faq-active .faq-content {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  opacity: 1;
-  padding-top: 10px;
+  display: block;
 }
 
 .faq .faq-container .faq-active .faq-toggle {
   transform: rotate(90deg);
   color: var(--accent-color);
+}
+
+.faq-content {
+  display: none;
+  padding: 10px 0;
+  color: #444;
+  transition: all 0.3s ease;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: unset;
+}
+.faq-item.faq-active .faq-content {
+  display: block;
+}
+.faq-toggle {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.faq-item.faq-active .faq-toggle {
+  transform: rotate(90deg);
 }
 
 /*--------------------------------------------------------------
