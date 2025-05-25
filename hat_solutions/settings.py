@@ -77,6 +77,8 @@ WSGI_APPLICATION = 'hat_solutions.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Local SQL Database...
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -84,14 +86,28 @@ WSGI_APPLICATION = 'hat_solutions.wsgi.application'
 #     }
 # }
 
+# Railway postgresql Database...
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DBNAME'),
+#         'USER': os.getenv('DBUSER'),
+#         'PASSWORD': os.getenv('DBPASS'),
+#         'HOST': os.getenv('DBHOST'),
+#         'PORT': os.getenv('DBPORT'),
+#     }
+# }
+
+# AWS RDS Database with postgresql
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DBNAME'),
-        'USER': os.getenv('DBUSER'),
-        'PASSWORD': os.getenv('DBPASS'),
-        'HOST': os.getenv('DBHOST'),
-        'PORT': os.getenv('DBPORT'),
+        'NAME': os.getenv('AWSDBNAME'),
+        'USER': os.getenv('AWSDBUSER'),
+        'PASSWORD': os.getenv('AWSDBPASS'),
+        'HOST': os.getenv('AWSDBHOST'),
+        'PORT': os.getenv('AWSDBPORT'),
     }
 }
 
