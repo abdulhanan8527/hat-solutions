@@ -28,7 +28,6 @@
 
   <!-- Vendor CSS Files -->
   <link href="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/aos/aos.css" rel="stylesheet">
   <link href="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
@@ -36,14 +35,34 @@
 
   <!-- Main CSS File -->
   <link href="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Impact
-  * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  
+  <style>
+    /* Additional styles for service details */
+    .service-detail-content {
+      display: none;
+    }
+    
+    .service-detail-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .services-list a.active {
+      background-color: #3498db;
+      color: white !important;
+      border-radius: 5px;
+      padding: 8px 15px;
+    }
+    
+    .services-list a:hover {
+      background-color: #f8f9fa;
+    }
+  </style>
 </head>
 
 <body class="service-details-page">
@@ -70,39 +89,21 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="{% url 'home' %}" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename">Hat Solutions</h1>
-          <!-- <img src="{% static 'img/hat-logo' %}" alt="" class="img-fluid post-author-img flex-shrink-0"> -->
+          <img 
+          src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/thehatlogo.svg" 
+          alt="Hat Solutions Logo" 
+          class="logo-img">         
           <span>.</span>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Home<br></a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#team">Team</a></li>
-            <!-- <li><a href="blog.html">Blog</a></li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li> -->
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="{% url 'home' %}" class="active">Home<br></a></li>
+            <li><a href="{% url 'home' %}#about">About</a></li>
+            <li><a href="{% url 'home' %}#services">Services</a></li>
+            <li><a href="{% url 'home' %}#portfolio">Portfolio</a></li>
+            <li><a href="{% url 'home' %}#team">Team</a></li>
+            <li><a href="{% url 'home' %}#contact">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -122,7 +123,6 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Service Details</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
             </div>
           </div>
         </div>
@@ -146,35 +146,164 @@
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="services-list">
-              <a href="{% url 'service_detail' 'nesciunt-mete' %}" {% if slug == 'nesciunt-mete' %}class="active"{% endif %}>Nesciunt Mete</a>
-              <a href="{% url 'service_detail' 'eosle-commodi' %}" {% if slug == 'eosle-commodi' %}class="active"{% endif %}>Eosle Commodi</a>
-              <a href="{% url 'service_detail' 'ledo-markt' %}" {% if slug == 'ledo-markt' %}class="active"{% endif %}>Ledo Markt</a>
-              <a href="{% url 'service_detail' 'asperiores-commodit' %}" {% if slug == 'asperiores-commodit' %}class="active"{% endif %}>Asperiores Commodit</a>
-              <a href="{% url 'service_detail' 'velit-doloremque' %}" {% if slug == 'velit-doloremque' %}class="active"{% endif %}>Velit Doloremque</a>
-              <a href="{% url 'service_detail' 'dolori-architecto' %}" {% if slug == 'dolori-architecto' %}class="active"{% endif %}>Dolori Architecto</a>
+              <a href="{% url 'service_detail' 'iso-certifications' %}" 
+                 class="{% if slug == 'iso-certifications' %}active{% endif %} service-link">
+                ISO Certifications
+              </a>
+              <a href="{% url 'service_detail' 'ecovadis-consultancy' %}" 
+                 class="{% if slug == 'ecovadis-consultancy' %}active{% endif %} service-link">
+                EcoVadis Consultancy
+              </a>
+              <a href="{% url 'service_detail' 'it-consultancy' %}" 
+                 class="{% if slug == 'it-consultancy' %}active{% endif %} service-link">
+                IT Consultancy
+              </a>
+              <a href="{% url 'service_detail' 'social-compliance-consultancy' %}" 
+                 class="{% if slug == 'social-compliance-consultancy' %}active{% endif %} service-link">
+                Social Compliance and Textile Consultancy
+              </a>
+              <a href="{% url 'service_detail' 'food-safety-certifications' %}" 
+                 class="{% if slug == 'food-safety-certifications' %}active{% endif %} service-link">
+                Food Safety Certifications
+              </a>
+              <a href="{% url 'service_detail' 'web-mobile-application' %}" 
+                 class="{% if slug == 'web-mobile-application' %}active{% endif %} service-link">
+                Web and Mobile Applications Development
+              </a>
             </div>
 
-            <h4>Enim qui eos rerum in delectus</h4>
-            <p>Nam voluptatem quasi numquam quas fugiat ex temporibus quo est. Quia aut quam quod facere ut non occaecati ut aut. Nesciunt mollitia illum tempore corrupti sed eum reiciendis. Maxime modi rerum.</p>
+            <h4>Our Expertise</h4>
+            <p>We provide specialized consulting services to help your business achieve compliance, improve processes, and enhance sustainability.</p>
           </div>
 
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="" class="img-fluid services-img">
-            <h3>Temporibus et in vero dicta aut eius lidero plastis trand lined voluptas dolorem ut voluptas</h3>
-            <p>
-              Blanditiis voluptate odit ex error ea sed officiis deserunt. Cupiditate non consequatur et doloremque consequuntur. Accusantium labore reprehenderit error temporibus saepe perferendis fuga doloribus vero. Qui omnis quo sit. Dolorem architecto eum et quos deleniti officia qui.
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Aut eum totam accusantium voluptatem.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Assumenda et porro nisi nihil nesciunt voluptatibus.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea</span></li>
-            </ul>
-            <p>
-              Est reprehenderit voluptatem necessitatibus asperiores neque sed ea illo. Deleniti quam sequi optio iste veniam repellat odit. Aut pariatur itaque nesciunt fuga.
-            </p>
-            <p>
-              Sunt rem odit accusantium omnis perspiciatis officia. Laboriosam aut consequuntur recusandae mollitia doloremque est architecto cupiditate ullam. Quia est ut occaecati fuga. Distinctio ex repellendus eveniet velit sint quia sapiente cumque. Et ipsa perferendis ut nihil. Laboriosam vel voluptates tenetur nostrum. Eaque iusto cupiditate et totam et quia dolorum in. Sunt molestiae ipsum at consequatur vero. Architecto ut pariatur autem ad non cumque nesciunt qui maxime. Sunt eum quia impedit dolore alias explicabo ea.
-            </p>
+            <!-- Service Details Container -->
+            <div id="service-detail-container">
+              <!-- ISO Certifications -->
+              <div id="service-iso-certifications" class="service-detail-content {% if slug == 'iso-certifications' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="ISO Certifications" class="img-fluid services-img">
+                <h3>ISO Certifications</h3>
+                <p>
+                  Achieve international standards with our comprehensive ISO certification services. We guide you through the entire process from gap analysis to certification.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>ISO 9001: Quality Management Systems</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>ISO 14001: Environmental Management</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>ISO 45001: Occupational Health & Safety</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>ISO 27001: Information Security Management</span></li>
+                </ul>
+                <p>
+                  Our team of experts will help you implement the necessary systems and processes to meet ISO requirements efficiently.
+                </p>
+                <p>
+                  We provide ongoing support to maintain your certification and continuously improve your management systems.
+                </p>
+              </div>
+
+              <!-- EcoVadis Consultancy -->
+              <div id="service-ecovadis-consultancy" class="service-detail-content {% if slug == 'ecovadis-consultancy' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="EcoVadis Consultancy" class="img-fluid services-img">
+                <h3>EcoVadis Consultancy</h3>
+                <p>
+                  Improve your sustainability rating with our EcoVadis consultancy services. We help you prepare for assessment and implement sustainable practices.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>Assessment preparation and documentation</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Sustainability policy development</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>CSR reporting and improvement strategies</span></li>
+                </ul>
+                <p>
+                  Our consultants have extensive experience helping businesses achieve high EcoVadis scores that enhance their reputation and business opportunities.
+                </p>
+                <p>
+                  We provide tailored solutions based on your industry and specific needs to maximize your sustainability performance.
+                </p>
+              </div>
+
+              <!-- IT Consultancy -->
+              <div id="service-it-consultancy" class="service-detail-content {% if slug == 'it-consultancy' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="IT Consultancy" class="img-fluid services-img">
+                <h3>IT Consultancy</h3>
+                <p>
+                  Transform your IT infrastructure with our expert consultancy services. We help businesses optimize technology investments and implement secure, efficient systems.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>IT infrastructure assessment</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Cloud migration strategies</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Cybersecurity solutions</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Digital transformation planning</span></li>
+                </ul>
+                <p>
+                  Our IT experts stay current with the latest technologies to provide forward-thinking solutions that drive business growth.
+                </p>
+                <p>
+                  We focus on creating scalable, secure IT environments that support your business objectives both now and in the future.
+                </p>
+              </div>
+
+              <!-- Social Compliance Consultancy -->
+              <div id="service-social-compliance-consultancy" class="service-detail-content {% if slug == 'social-compliance-consultancy' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="Social Compliance Consultancy" class="img-fluid services-img">
+                <h3>Social Compliance and Textile Consultancy</h3>
+                <p>
+                  Ensure ethical labor practices and social responsibility throughout your supply chain with our comprehensive consultancy services.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>SA8000 implementation</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>SMETA audit preparation</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Supplier code of conduct development</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Remediation planning</span></li>
+                </ul>
+                <p>
+                  We help businesses create ethical workplaces that meet international standards and enhance brand reputation.
+                </p>
+                <p>
+                  Our approach includes training, policy development, and ongoing support to maintain compliance and continuously improve social performance.
+                </p>
+              </div>
+
+              <!-- Food Safety Certifications -->
+              <div id="service-food-safety-certifications" class="service-detail-content {% if slug == 'food-safety-certifications' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="Food Safety Certifications" class="img-fluid services-img">
+                <h3>Food Safety Certifications</h3>
+                <p>
+                  Achieve food safety excellence with our certification services for international standards including FSSC 22000, BRCGS, and HACCP.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>FSSC 22000 certification</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>BRCGS Food Safety</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>HACCP implementation</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>ISO 22000 Food Safety Management</span></li>
+                </ul>
+                <p>
+                  Our food safety experts have extensive industry experience and will guide you through the certification process from start to finish.
+                </p>
+                <p>
+                  We provide customized solutions that address the unique challenges of your food business while ensuring compliance with regulatory requirements.
+                </p>
+              </div>
+
+              <!-- Web and Mobile Applications Development -->
+              <div id="service-web-mobile-application" class="service-detail-content {% if slug == 'web-mobile-application' %}active{% endif %}">
+                <img src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/services.jpg" alt="Business Architecture" class="img-fluid services-img">
+                <h3>Business Architecture Solutions</h3>
+                <p>
+                  Transform your business operations with our strategic architecture solutions designed to optimize processes and enhance efficiency.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check-circle"></i> <span>Business process redesign</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Organizational structure optimization</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Technology integration planning</span></li>
+                  <li><i class="bi bi-check-circle"></i> <span>Change management strategies</span></li>
+                </ul>
+                <p>
+                  Our approach combines industry best practices with innovative thinking to create sustainable business architectures.
+                </p>
+                <p>
+                  We work closely with your team to implement solutions that align with your strategic goals and deliver measurable results.
+                </p>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -206,22 +335,22 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'home' %}#about">About us</a></li>
+            <li><a href="{% url 'home' %}#services">Services</a></li>
+            <li><a href="{% url 'home' %}#portfolio">Portfolio</a></li>
+            <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="{% url 'service_detail' 'iso-certifications' %}">ISO Certifications</a></li>
+            <li><a href="{% url 'service_detail' 'ecovadis-consultancy' %}">EcoVadis Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'it-consultancy' %}">IT Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'social-compliance-consultancy' %}">Social Compliance and Textile Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'food-safety-certifications' %}">Food Safety</a></li>
           </ul>
         </div>
 
@@ -247,7 +376,6 @@
 
   <!-- Vendor JS Files -->
   <script src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
   <script src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/aos/aos.js"></script>
   <script src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/vendor/swiper/swiper-bundle.min.js"></script>
@@ -257,7 +385,44 @@
 
   <!-- Main JS File -->
   <script src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/js/main.js"></script>
-
+  
+  <script>
+    // Function to show the selected service and hide others
+    function showService(slug) {
+      // Hide all service details
+      document.querySelectorAll('.service-detail-content').forEach(function(content) {
+        content.classList.remove('active');
+      });
+      
+      // Show the selected service
+      const serviceElement = document.getElementById('service-' + slug);
+      if (serviceElement) {
+        serviceElement.classList.add('active');
+      }
+      
+      // Update active class in navigation
+      document.querySelectorAll('.services-list a').forEach(function(link) {
+        link.classList.remove('active');
+      });
+      
+      const activeLink = document.querySelector('.services-list a[href*="' + slug + '"]');
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+    
+    // Initialize the service based on the current slug
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the current slug from the URL
+      const path = window.location.pathname;
+      const slug = path.substring(path.lastIndexOf('/') + 1);
+      
+      // Show the service based on the slug
+      if (slug) {
+        showService(slug);
+      }
+    });
+  </script>
 </body>
 
 </html>

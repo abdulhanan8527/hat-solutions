@@ -49,14 +49,15 @@
     <div class="topbar d-flex align-items-center">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">marketing@thehatsolution.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+92 300 9693457</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="https://pin.it/etzJsARUX" class="twitter"><i class="bi bi-pinterest"></i></a>
+          <a href="https://www.facebook.com/share/1HBtENL6yA/?mibextid=wwXIfr" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/hat_solutions?igsh=NTd6cWd3bno2YWlt&utm_source=ig_contact_invite" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/hat-solutions-private-limited/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="https://wa.me/message/VIT4DQBOA4W4O1"><i class="bi bi-whatsapp"></i></a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -67,18 +68,23 @@
         <a href="{% url 'home' %}" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename">Impact</h1>
+          <!-- <h1 class="sitename">Hat Solutions</h1> -->
+          <img 
+          src="https://hat-solutions.s3.eu-north-1.amazonaws.com/static/img/thehatlogo.svg" 
+          alt="Hat Solutions Logo" 
+          class="logo-img">         
+          <!-- <img src="{% static 'img/hat-logo' %}" alt="" class="img-fluid post-author-img flex-shrink-0"> -->
           <span>.</span>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero">Home<br></a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#team">Team</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="{% url 'home' %}" class="active">Home<br></a></li>
+            <li><a href="{% url 'home' %}#about">About</a></li>
+            <li><a href="{% url 'home' %}#services">Services</a></li>
+            <li><a href="{% url 'home' %}#portfolio">Portfolio</a></li>
+            <li><a href="{% url 'home' %}#team">Team</a></li>
+            <!-- <li><a href="blog.html">Blog</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
@@ -95,7 +101,7 @@
                 <li><a href="#">Dropdown 3</a></li>
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
-            </li>
+            </li> -->
             <li><a href="#contact">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -116,7 +122,7 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Portfolio Details</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+              <!-- <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p> -->
             </div>
           </div>
         </div>
@@ -181,46 +187,47 @@
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-about">
           <a href="{% url 'home' %}" class="logo d-flex align-items-center">
-            <span class="sitename">Impact</span>
+            <span class="sitename">Hat Solutions</span>
           </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+          <p>Your Trusted Partner in compliance with ISO, IT, Food, Packaging & Sustainability Standards.</p>
           <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
+            <a href="https://pin.it/etzJsARUX"><i class="bi bi-pinterest"></i></a>
+            <a href="https://www.facebook.com/share/1HBtENL6yA/?mibextid=wwXIfr"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/hat_solutions?igsh=NTd6cWd3bno2YWlt&utm_source=ig_contact_invite"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/hat-solutions-private-limited/"><i class="bi bi-linkedin"></i></a>
+            <a href="https://wa.me/message/VIT4DQBOA4W4O1"><i class="bi bi-whatsapp"></i></a>
           </div>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'home' %}#about">About us</a></li>
+            <li><a href="{% url 'home' %}#services">Services</a></li>
+            <li><a href="{% url 'home' %}#portfolio">Portfolio</a></li>
+            <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="{% url 'service_detail' 'iso-certifications' %}">ISO Certifications</a></li>
+            <li><a href="{% url 'service_detail' 'ecovadis-consultancy' %}">EcoVadis Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'it-consultancy' %}">IT Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'social-compliance-consultancy' %}">Social Compliance and Textile Consultancy</a></li>
+            <li><a href="{% url 'service_detail' 'food-safety-certifications' %}">Food Safety</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-          <p><strong>Email:</strong> <span>info@example.com</span></p>
+          <p>House#10, Street 02 Habib Colony</p>
+          <p>Rahim Yar Khan, 64200</p>
+          <p>Pakistan</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+92 300 9693457</span></p>
+          <p><strong>Email:</strong> <span>marketing@thehatsolution.com</span></p>
         </div>
 
       </div>
@@ -246,6 +253,22 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      new Swiper('.portfolio-details-slider', {
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'bullets',
+          clickable: true
+        }
+      });
+    });
+    </script>
 
 </body>
 
