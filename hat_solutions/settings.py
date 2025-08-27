@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -154,18 +153,31 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Supabase storage for storing media and static files
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
+
+# Static & Media storage with Supabase
+# Use different storages for static and media
+STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
+DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
+
+STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 # MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For production
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'hat_app/static'),
-]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For production
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # required for collectstatic
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'hat_app/static'),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -197,16 +209,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # }
 # AWS_LOCATION = 'static'  # Folder in bucket for static files
 # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
-
-# Supabase storage for storing media and static files
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
-SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
-
-# Static & Media storage with Supabase
-# Use different storages for static and media
-STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
-DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
-
-STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
-MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
