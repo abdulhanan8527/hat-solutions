@@ -7,19 +7,11 @@
       "config": {
         "runtime": "python3.9",
         "maxLambdaSize": "15mb",
-        "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
-        "startCommand": "gunicorn hat_solutions.wsgi --bind 0.0.0.0:$PORT"
+        "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput"
       }
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
     {
       "src": "/(.*)",
       "dest": "hat_solutions/wsgi.py"

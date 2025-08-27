@@ -158,10 +158,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For production
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'hat_app/static'),
@@ -202,3 +202,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
+
+# Static & Media storage with Supabase
+DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseStorage"
+STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStorage"
+
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
+STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
