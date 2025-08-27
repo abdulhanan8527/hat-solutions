@@ -1,85 +1,92 @@
-import os
-from django.core.files.base import ContentFile
-from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
 from django.core.files.storage import Storage
-from supabase import create_client
+from django.core.files.base import ContentFile
+from supabase import create_client, Client
+from django.conf import settings
+import os
+import logging
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET", "hat-solutions")
+logger = logging.getLogger(__name__)
 
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+class SupabaseStorage(Storage):
+    def __init__(self, location=None):
+        self.location = location or self.location
+        self.supabase = self._get_supabase_client()
+        self.bucket_name = settings.SUPABASE_BUCKET
 
-
-class SupabaseMediaStorage(Storage):
-    """For MEDIA files"""
-    location = "media"
+    def _get_supabase_client(self) -> Client:
+        """Initialize and return Supabase client"""
+        supabase_url = settings.SUPABASE_URL
+        supabase_key = settings.SUPABASE_KEY
+        
+        if not supabase_url or not supabase_key:
+            raise ValueError("Supabase URL and Key must be set in environment variables")
+            
+        return create_client(supabase_url, supabase_key)
 
     def _save(self, name, content):
         path = f"{self.location}/{name}"
+        
+        # Ensure we're at the beginning of the file
+        if hasattr(content, 'seek') and hasattr(content, 'tell'):
+            if content.tell() > 0:
+                content.seek(0)
+        
         data = content.read()
-        print(f"🔹 Uploading MEDIA {path} to Supabase...")
-        res = supabase.storage.from_(SUPABASE_BUCKET).upload(path, data, {"upsert": True})
-        if isinstance(res, dict) and res.get("error"):
-            raise Exception(f"Supabase upload error: {res['error']}")
-        return path
+        
+        try:
+            res = self.supabase.storage.from_(self.bucket_name).upload(
+                path, 
+                data, 
+                {"upsert": True, "content-type": self._get_content_type(name)}
+            )
+            
+            if hasattr(res, 'error') and res.error:
+                logger.error(f"Supabase upload error: {res.error}")
+                raise Exception(f"Supabase upload error: {res.error}")
+                
+            return path
+        except Exception as e:
+            logger.error(f"Error uploading to Supabase: {str(e)}")
+            raise
 
-    def _open(self, name, mode="rb"):
-        res = supabase.storage.from_(SUPABASE_BUCKET).download(f"{self.location}/{name}")
-        if isinstance(res, bytes):
-            return ContentFile(res)
-        raise Exception("Failed to download file from Supabase")
+    def _get_content_type(self, filename):
+        """Get content type based on file extension"""
+        extension = os.path.splitext(filename)[1].lower()
+        content_types = {
+            '.css': 'text/css',
+            '.js': 'application/javascript',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.gif': 'image/gif',
+            '.svg': 'image/svg+xml',
+            '.ico': 'image/x-icon',
+        }
+        return content_types.get(extension, 'application/octet-stream')
 
     def url(self, name):
-        return f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{self.location}/{name}"
+        return f"{settings.SUPABASE_URL}/storage/v1/object/public/{self.bucket_name}/{self.location}/{name}"
 
     def exists(self, name):
         try:
-            files = supabase.storage.from_(SUPABASE_BUCKET).list(self.location)
-            return any(f["name"] == name for f in files)
-        except Exception:
+            path = f"{self.location}/{name}"
+            res = self.supabase.storage.from_(self.bucket_name).list(path)
+            return len(res) > 0
+        except:
             return False
-        
 
-class SupabaseStaticStorage(ManifestStaticFilesStorage):
+    def delete(self, name):
+        path = f"{self.location}/{name}"
+        try:
+            self.supabase.storage.from_(self.bucket_name).remove([path])
+        except Exception as e:
+            logger.error(f"Error deleting from Supabase: {str(e)}")
+            raise
+
+class SupabaseStaticStorage(SupabaseStorage):
+    """Storage for static files (CSS, JS, Admin assets)."""
     location = "static"
 
-    def _save(self, name, content):
-        path = f"{self.location}/{name}"
-        data = content.read()
-        print(f"🔹 Uploading STATIC {path} to Supabase...")
-
-        res = supabase.storage.from_(SUPABASE_BUCKET).upload(
-            path, data, {"upsert": True}
-        )
-        if isinstance(res, dict) and res.get("error"):
-            raise Exception(f"Supabase upload error: {res['error']}")
-        return path
-
-    def url(self, name):
-        return f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{self.location}/{name}"
-
-    def post_process(self, paths, dry_run=False, **options):
-        # Force upload every file during collectstatic
-        for name, hashed_name, processed in super().post_process(paths, dry_run, **options):
-            full_path = self.path(name)
-            with open(full_path, "rb") as f:
-                self._save(name, f)
-            yield name, hashed_name, processed
-
-
-# class SupabaseStaticStorage(ManifestStaticFilesStorage):
-#     """For STATIC files (subclass ManifestStaticFilesStorage so Django uses it)"""
-#     location = "static"
-
-#     def _save(self, name, content):
-#         path = f"{self.location}/{name}"
-#         data = content.read()
-#         print(f"🔹 Uploading STATIC {path} to Supabase...")
-#         res = supabase.storage.from_(SUPABASE_BUCKET).upload(path, data, {"upsert": True})
-#         if isinstance(res, dict) and res.get("error"):
-#             raise Exception(f"Supabase upload error: {res['error']}")
-#         return path
-
-#     def url(self, name):
-#         return f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{self.location}/{name}"
+class SupabaseMediaStorage(SupabaseStorage):
+    """Storage for uploaded media (user files, portfolio images)."""
+    location = "media"
