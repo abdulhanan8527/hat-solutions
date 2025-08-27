@@ -1,29 +1,29 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "hat_solutions/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "python3.9",
-        "maxLambdaSize": "15mb",
-        "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput"
-      }
+    "version": 2,
+    "builds": [
+        {
+            "src": "hat_solutions/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "runtime": "python3.9",
+                "maxLambdaSize": "15mb",
+                "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/staticfiles/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "hat_solutions/wsgi.py"
+        }
+    ],
+    "functions": {
+        "hat_solutions/wsgi.py": {
+            "maxDuration": 30
+        }
     }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "hat_solutions/wsgi.py"
-    }
-  ],
-  "functions": {
-    "hat_solutions/wsgi.py": {
-      "maxDuration": 30
-    }
-  }
 }
