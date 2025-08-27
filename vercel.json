@@ -1,28 +1,28 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "hat_solutions/wsgi.py",
-        "use": "@vercel/python",
-        "config": {
-          "runtime": "python3.9",
-          "maxLambdaSize": "15mb",
-          "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
-          "startCommand": "gunicorn hat_solutions.wsgi --bind 0.0.0.0:$PORT"
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "hat_solutions/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9",
+        "maxLambdaSize": "15mb",
+        "installCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+        "startCommand": "gunicorn hat_solutions.wsgi --bind 0.0.0.0:$PORT"
       }
-    ],
-    "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "https://your-bucket.s3.amazonaws.com/static/$1",
-        "headers": {
-          "Cache-Control": "public, max-age=31536000, immutable"
-        }
-      },
-      {
-        "src": "/(.*)",
-        "dest": "hat_solutions/wsgi.py"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
       }
-    ]
-  }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "hat_solutions/wsgi.py"
+    }
+  ]
+}
