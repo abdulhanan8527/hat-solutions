@@ -204,8 +204,9 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
 
 # Static & Media storage with Supabase
-DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseStorage"
-STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStorage"
+# Use different storages for static and media
+STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
+DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
 
-MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
 STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
