@@ -163,8 +163,12 @@ SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
 STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
 DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
 
-STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
-MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
+# STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
+# MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
+
+# URL settings for static and media files
+STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/" if SUPABASE_URL else "/static/"
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/" if SUPABASE_URL else "/media/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
