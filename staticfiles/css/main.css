@@ -1868,7 +1868,7 @@ section,
   color: var(--accent-color);
 }
 
-.faq-content {
+/* .faq-content {
   display: none;
   padding: 10px 0;
   color: #444;
@@ -1886,7 +1886,7 @@ section,
 }
 .faq-item.faq-active .faq-toggle {
   transform: rotate(90deg);
-}
+} */
 
 /*--------------------------------------------------------------
 # Recent Posts Section
