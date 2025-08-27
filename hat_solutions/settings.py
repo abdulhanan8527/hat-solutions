@@ -160,15 +160,15 @@ SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
 
 # Static & Media storage with Supabase
 # Use different storages for static and media
-STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
-DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
+# STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
+# DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
 
 # STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
 # MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/"
 
 # URL settings for static and media files
-STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/" if SUPABASE_URL else "/static/"
-MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/" if SUPABASE_URL else "/media/"
+# STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/" if SUPABASE_URL else "/static/"
+# MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/media/" if SUPABASE_URL else "/media/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -216,13 +216,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Ensure Django can find static files during development
 if DEBUG:
+    # Local development - serve static files normally
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
+        os.path.join(BASE_DIR, 'hat_app/static'),
     ]
+else:
+    # Production - use Supabase for static files
+    SUPABASE_URL = os.environ.get("SUPABASE_URL")
+    SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+    SUPABASE_BUCKET = "hat-solutions"
+    
+    STATICFILES_STORAGE = "hat_app.storage_backends.SupabaseStaticStorage"
+    STATIC_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/static/"
 
-# Security settings for production
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+# Media files configuration (always use Supabase)
+DEFAULT_FILE_STORAGE = "hat_app.storage_backends.SupabaseMediaStorage"
+MEDIA_URL = f"{os.environ.get('SUPABASE_URL')}/storage/v1/object/public/hat-solutions/media/"
