@@ -100,14 +100,26 @@ WSGI_APPLICATION = 'hat_solutions.wsgi.application'
 # }
 
 # AWS RDS Database with postgresql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('AWSDBNAME'),
+#         'USER': os.getenv('AWSDBUSER'),
+#         'PASSWORD': os.getenv('AWSDBPASS'),
+#         'HOST': os.getenv('AWSDBHOST'),
+#         'PORT': os.getenv('AWSDBPORT'),
+#     }
+# }
+
+#Supabase Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('AWSDBNAME'),
-        'USER': os.getenv('AWSDBUSER'),
-        'PASSWORD': os.getenv('AWSDBPASS'),
-        'HOST': os.getenv('AWSDBHOST'),
-        'PORT': os.getenv('AWSDBPORT'),
+        'NAME': os.getenv('DB_NAME', 'postgres'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -159,26 +171,33 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_FILE_OVERWRITE = False
+# AWS S3 storage for storing media and static files
+
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_FILE_OVERWRITE = False
 
 
-STORAGES = {
+# STORAGES = {
 
-    "default": {
-        "BACKEND" : "storages.backends.s3.S3Storage",
-    },
+#     "default": {
+#         "BACKEND" : "storages.backends.s3.S3Storage",
+#     },
 
-    "staticfiles": {
-        "BACKEND" : "storages.backends.s3.S3Storage",
-    },
-}
+#     "staticfiles": {
+#         "BACKEND" : "storages.backends.s3.S3Storage",
+#     },
+# }
 
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'  # Folder in bucket for static files
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_LOCATION = 'static'  # Folder in bucket for static files
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+
+# Supabase storage for storing media and static files
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+SUPABASE_BUCKET = "hat-solutions"  # Replace with your actual bucket name
